@@ -1,4 +1,4 @@
-namespace song_api_unittests;
+namespace Song_Api_Unittests;
 
 public class UnitTest1
 {

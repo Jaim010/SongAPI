@@ -1,4 +1,4 @@
-namespace song_api_intergrationtests;
+namespace Song_Api_Intergrationtests;
 
 public class UnitTest1
 {

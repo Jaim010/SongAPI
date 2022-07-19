@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace song_api.PostgreSQL
+namespace Song_Api.PostgreSQL
 {
   public class SongContext : DbContext
   {

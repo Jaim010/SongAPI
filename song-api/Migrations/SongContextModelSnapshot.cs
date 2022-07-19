@@ -3,11 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using song_api.PostgreSQL;
+using Song_Api.PostgreSQL;
 
 #nullable disable
 
-namespace song_api.Migrations
+namespace Song_Api.Migrations
 {
     [DbContext(typeof(SongContext))]
     partial class SongContextModelSnapshot : ModelSnapshot
@@ -21,7 +21,7 @@ namespace song_api.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("song_api.Models.Song", b =>
+            modelBuilder.Entity("Song_Api.Models.Song", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

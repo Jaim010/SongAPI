@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using song_api.PostgreSQL;
+using Song_Api.PostgreSQL;
 
 var builder = WebApplication.CreateBuilder(args);
 

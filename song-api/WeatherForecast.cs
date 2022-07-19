@@ -1,4 +1,4 @@
-namespace song_api;
+namespace Song_Api;
 
 public class WeatherForecast
 {
