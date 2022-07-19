@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using song_api.PostgreSQL;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,13 +10,18 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddDbContext<SongContext>(options
+    => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// builder.Services.AddScoped<ISongService, SongService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+  app.UseSwagger();
+  app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
@@ -21,5 +29,8 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapGet("/health", async context => await context.Response.WriteAsync("healthy"));
+
+DbInitializer.CreateDbIfNotExists(app);
 
 app.Run();
