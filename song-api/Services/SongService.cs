@@ -33,7 +33,7 @@ namespace Song_Api.Services
       return new(song, Result.Ok);
     }
 
-    public async Task<Result> PutSong(int id, Song song)
+    public async Task<Result> UpdateSong(int id, Song song)
     {
       if (id != song.Id)
         return Result.BadRequest;
@@ -59,7 +59,7 @@ namespace Song_Api.Services
       return Result.Ok;
     }
 
-    public async Task<Tuple<Song?, Result>> PostSong(Song song)
+    public async Task<Tuple<Song?, Result>> AddSong(Song song)
     {
       if (_context.Songs == null)
         return new(null, Result.Err);

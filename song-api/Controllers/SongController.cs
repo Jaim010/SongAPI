@@ -44,7 +44,7 @@ namespace song_api.Controllers
     [HttpPut("{id}")]
     public async Task<IActionResult> PutSong(int id, Song song)
     {
-      Result result = await _service.PutSong(id, song);
+      Result result = await _service.UpdateSong(id, song);
       switch (result)
       {
         case Result.BadRequest:
@@ -66,7 +66,7 @@ namespace song_api.Controllers
     [HttpPost]
     public async Task<ActionResult<Song>> PostSong(Song song)
     {
-      (Song? postedSong, Result result) = await _service.PostSong(song);
+      (Song? postedSong, Result result) = await _service.AddSong(song);
 
       if (result == Result.Err)
         return Problem("Entity set 'SongContext.Songs'  is null.");

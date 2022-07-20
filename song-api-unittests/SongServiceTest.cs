@@ -73,7 +73,7 @@ public class SongServiceTest : SongDataSeed
     };
 
     // Act
-    (var song, var result) = await service.PostSong(newSong);
+    (var song, var result) = await service.AddSong(newSong);
 
     // Assert
     Assert.Equal(Result.Ok, result);
@@ -97,7 +97,7 @@ public class SongServiceTest : SongDataSeed
     song.Name = "25 To Life";
 
     // Act
-    result = await service.PutSong(id, song);
+    result = await service.UpdateSong(id, song);
 
     // Assert
     Assert.Equal(Result.Ok, result);
@@ -121,7 +121,7 @@ public class SongServiceTest : SongDataSeed
     song.Name = "25 To Life";
 
     // Act
-    result = await service.PutSong(notMatchingId, song);
+    result = await service.UpdateSong(notMatchingId, song);
 
     // Assert
     Assert.Equal(Result.BadRequest, result);
