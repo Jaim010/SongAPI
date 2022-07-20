@@ -17,7 +17,7 @@ namespace song_api.Controllers
 
     // GET: api/Song
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Song>>> GetSongs()
+    public async Task<IActionResult> GetSongs()
     {
       (IEnumerable<Song>? songs, Result result) = await _service.GetSongs();
 
@@ -29,7 +29,7 @@ namespace song_api.Controllers
 
     // GET: api/Song/5
     [HttpGet("{id}")]
-    public async Task<ActionResult<Song>> GetSong(int id)
+    public async Task<IActionResult> GetSong(int id)
     {
       (Song? song, Result result) = await _service.GetSong(id);
 
@@ -54,7 +54,7 @@ namespace song_api.Controllers
           return NotFound();
 
         case Result.Ok:
-          return Ok();
+          return NoContent();
 
         default:
           return StatusCode(500);
@@ -64,7 +64,7 @@ namespace song_api.Controllers
     // POST: api/Song
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPost]
-    public async Task<ActionResult<Song>> PostSong(Song song)
+    public async Task<IActionResult> PostSong(Song song)
     {
       (Song? postedSong, Result result) = await _service.AddSong(song);
 

@@ -16,9 +16,7 @@ namespace Song_Api_Unittests
     protected SongContext context;
 
     // Called before every test method.
-    protected SongDataSeed() => Setup();
-
-    public void Setup()
+    protected SongDataSeed()
     {
       context = new SongContext(dbContextOptions);
       context.Database.EnsureCreated();
