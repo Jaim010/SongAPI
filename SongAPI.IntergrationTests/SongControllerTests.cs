@@ -1,5 +1,6 @@
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc.Testing;
 using SongAPI.Models;
@@ -74,9 +75,98 @@ namespace SongAPI.IntergrationTests
       Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }
 
+    [Fact]
+    public async void PutSong_GivenSongAndMatchingID_ReturnsNoContent()
+    {
+      // Arrange
+      var id = 1;
+      var song = new Song() { Id = 1, Name = "A Place For My Head", Artist = "Linkin Park", ImageUrl = "" };
+      var jsonStr = JsonSerializer.Serialize(song);
+      var content = new StringContent(jsonStr, Encoding.UTF8, "application/json");
 
-    // Arrange 
-    // Act
-    // Assert
+      // Act
+      var response = await _client.PutAsync($"/api/song/{id}", content);
+
+      // Assert
+      response.EnsureSuccessStatusCode();
+      Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
+    }
+
+    [Fact]
+    public async void PutSong_GivenSongAndNotMatchingID_ReturnsBadRequest()
+    {
+      // Arrange
+      var id = -1;
+      var song = new Song() { Id = 1, Name = "A Place For My Head", Artist = "Linkin Park", ImageUrl = "" };
+      var jsonStr = JsonSerializer.Serialize(song);
+      var content = new StringContent(jsonStr, Encoding.UTF8, "application/json");
+
+      // Act
+      var response = await _client.PutAsync($"/api/song/{id}", content);
+
+      // Assert
+      Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+    }
+
+    [Fact]
+    public async void PutSong_NotExistingSongAndID_ReturnsNotFound()
+    {
+      // Arrange
+      var id = -1;
+      var song = new Song() { Id = -1, Name = "A Place For My Head", Artist = "Linkin Park", ImageUrl = "" };
+      var jsonStr = JsonSerializer.Serialize(song);
+      var content = new StringContent(jsonStr, Encoding.UTF8, "application/json");
+
+      // Act
+      var response = await _client.PutAsync($"/api/song/{id}", content);
+
+      // Assert
+      Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+    }
+
+
+    [Fact]
+    public async void PostSong_GivenAlbum_ReturnsAlbum()
+    {
+      // Arrange 
+      var song = new Song() { Name = "X Gon' Give It To Ya", Artist = "DMX", ImageUrl = "" };
+      var jsonStr = JsonSerializer.Serialize(song);
+      var content = new StringContent(jsonStr, Encoding.UTF8, "application/json");
+
+      // Act
+      var response = await _client.PostAsync($"/api/song/", content);
+
+      // Assert
+      response.EnsureSuccessStatusCode();
+      Assert.Equal(HttpStatusCode.Created, response.StatusCode);
+    }
+
+    [Fact]
+    public async void DeleteSong_GivenExistingID_ReturnsNoContent()
+    {
+      // Arrange 
+      var id = 1;
+
+      // Act
+      var response = await _client.DeleteAsync($"/api/song/{id}");
+
+      // Assert
+      response.EnsureSuccessStatusCode();
+      Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
+    }
+
+
+    [Fact]
+    public async void DeleteSong_GivenNonExistingID_ReturnsNotFound()
+    {
+      // Arrange 
+      var id = -1;
+
+      // Act
+      var response = await _client.DeleteAsync($"/api/song/{id}");
+
+      // Assert
+      Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+    }
   }
 }

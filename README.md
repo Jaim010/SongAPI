@@ -10,5 +10,8 @@ The default connection string should be set before running. Replace each field w
 ...
 ```
 ## Running
-Run the command below in the `/song-api/` directory. <br />
-`dotnet run`
+Run `dotnet run` in the `/song-api/` directory. <br />
+
+## Testing
+Run `dotnet test` in the root directory (`/`). <br />
+

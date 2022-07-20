@@ -67,7 +67,7 @@ namespace SongAPI.Controllers
       (Song? postedSong, Result result) = await _service.AddSong(song);
 
       if (result == Result.Err)
-        return Problem("Entity set 'SongContext.Songs'  is null.");
+        return Problem("Entity set 'SongContext.Songs' is null.");
 
       return CreatedAtAction("GetSong", new { id = song.Id }, song);
     }
