@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Song_Api.PostgreSQL;
+using Song_Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,9 +12,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<SongContext>(options
-    => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+  => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// builder.Services.AddScoped<ISongService, SongService>();
+builder.Services.AddScoped<ISongService, SongService>();
 
 var app = builder.Build();
 
