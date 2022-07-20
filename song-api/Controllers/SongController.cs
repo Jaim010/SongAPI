@@ -1,7 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Song_Api.Models;
-using Song_Api.PostgreSQL;
 using Song_Api.Services;
 
 namespace song_api.Controllers

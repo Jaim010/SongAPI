@@ -35,3 +35,5 @@ app.MapGet("/health", async context => await context.Response.WriteAsync("health
 DbInitializer.CreateDbIfNotExists(app);
 
 app.Run();
+
+public partial class Program {}
