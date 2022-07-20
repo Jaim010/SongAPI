@@ -1,4 +1,4 @@
-# .NET 6, ASP.NET Core & Entity Framework Core - Song API
+# .NET 6, ASP.NET Core & Entity Framework Core 6 - Song API
 
 ## Setup
 The default connection string should be set before running. Replace each field with your own data. This format follows the Npgsql string format for PostgreSQL.<br />
