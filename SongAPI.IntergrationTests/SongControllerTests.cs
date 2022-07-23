@@ -80,7 +80,7 @@ namespace SongAPI.IntergrationTests
     {
       // Arrange
       var id = 1;
-      var song = new Song() { Id = 1, Name = "A Place For My Head", Artist = "Linkin Park", ImageUrl = "" };
+      var song = new Song() { Id = 1, Name = "A Place For My Head", Artist = "Linkin Park", ImageUrl = "https://picsum.photos/200/300" };
       var jsonStr = JsonSerializer.Serialize(song);
       var content = new StringContent(jsonStr, Encoding.UTF8, "application/json");
 
@@ -97,7 +97,7 @@ namespace SongAPI.IntergrationTests
     {
       // Arrange
       var id = -1;
-      var song = new Song() { Id = 1, Name = "A Place For My Head", Artist = "Linkin Park", ImageUrl = "" };
+      var song = new Song() { Id = 1, Name = "A Place For My Head", Artist = "Linkin Park", ImageUrl = "https://picsum.photos/200/300" };
       var jsonStr = JsonSerializer.Serialize(song);
       var content = new StringContent(jsonStr, Encoding.UTF8, "application/json");
 
@@ -113,7 +113,7 @@ namespace SongAPI.IntergrationTests
     {
       // Arrange
       var id = -1;
-      var song = new Song() { Id = -1, Name = "A Place For My Head", Artist = "Linkin Park", ImageUrl = "" };
+      var song = new Song() { Id = -1, Name = "A Place For My Head", Artist = "Linkin Park", ImageUrl = "https://picsum.photos/200/300" };
       var jsonStr = JsonSerializer.Serialize(song);
       var content = new StringContent(jsonStr, Encoding.UTF8, "application/json");
 
@@ -129,7 +129,7 @@ namespace SongAPI.IntergrationTests
     public async void PostSong_GivenAlbum_ReturnsAlbum()
     {
       // Arrange 
-      var song = new Song() { Name = "X Gon' Give It To Ya", Artist = "DMX", ImageUrl = "" };
+      var song = new Song() { Name = "X Gon' Give It To Ya", Artist = "DMX", ImageUrl = "https://picsum.photos/200/300" };
       var jsonStr = JsonSerializer.Serialize(song);
       var content = new StringContent(jsonStr, Encoding.UTF8, "application/json");
 
