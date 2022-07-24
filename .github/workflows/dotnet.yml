@@ -27,10 +27,10 @@ jobs:
 
     - name: Test unit tests
       run: dotnet test --no-build --verbosity normal
-      working-directory: SongAPI.UnitTests/
+      working-directory: Song.API.UnitTests/
 
     - name: Test intergration tests
       run: dotnet test --no-build --verbosity normal
-      working-directory: SongAPI.IntergrationTests/
+      working-directory: Song.API.IntergrationTests/
 
 

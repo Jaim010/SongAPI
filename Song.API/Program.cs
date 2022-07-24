@@ -1,7 +1,7 @@
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
-using SongAPI.PostgreSQL;
-using SongAPI.Services;
+using Song.API.PostgreSQL;
+using Song.API.Services;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);

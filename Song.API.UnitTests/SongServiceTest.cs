@@ -1,7 +1,7 @@
-using SongAPI.Models;
-using SongAPI.Services;
+using Song.API.Models;
+using Song.API.Services;
 
-namespace SongAPI.UnitTests;
+namespace Song.API.UnitTests;
 
 public class SongServiceTest : SongDataSeed
 {
@@ -46,7 +46,7 @@ public class SongServiceTest : SongDataSeed
   [Theory]
   [InlineData(5, Result.NotFound, null)]
   [InlineData(-1, Result.NotFound, null)]
-  public async void InvalidGetSongTheory(int id, Result expectedResult, Song expectedSong)
+  public async void InvalidGetSongTheory(int id, Result expectedResult, Models.Song expectedSong)
   {
     // Arrange
     var service = new SongService(this.context);
@@ -64,7 +64,7 @@ public class SongServiceTest : SongDataSeed
   {
     // Arrange
     var service = new SongService(this.context);
-    var newSong = new Song()
+    var newSong = new Models.Song()
     {
       Id = 5,
       Name = "Potato Salad",

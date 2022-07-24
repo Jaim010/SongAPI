@@ -1,10 +1,10 @@
 using Moq;
-using SongAPI.Controllers;
-using SongAPI.Models;
-using SongAPI.Services;
+using Song.API.Controllers;
+using Song.API.Models;
+using Song.API.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace SongAPI.UnitTests
+namespace Song.API.UnitTests
 {
   public class SongControllerTest
   {
@@ -12,14 +12,14 @@ namespace SongAPI.UnitTests
     public async void GetSongs_SongsExist_ReturnsOk()
     {
       // Arrange
-      var songs = new List<Song> {
+      var songs = new List<Models.Song> {
           new() { Id=1, Name="The Dying Song", Artist="Slipknot", ImageUrl=""},
           new() { Id=2, Name="Faint", Artist="Linkin Park", ImageUrl=""},
           new() { Id=3, Name="Shogun", Artist="Trivium", ImageUrl=""},
           new() { Id=4, Name="Like You Do", Artist="Joji", ImageUrl=""},
         };
 
-      var iEnumSongs = (IEnumerable<Song>)songs;
+      var iEnumSongs = (IEnumerable<Models.Song>)songs;
       var methodResult = Tuple.Create(iEnumSongs, Result.Ok);
 
       var songServiceMock = new Mock<ISongService>();
@@ -35,7 +35,7 @@ namespace SongAPI.UnitTests
 
       // Assert
       var okObjectResult = Assert.IsType<OkObjectResult>(response);
-      var returnValue = Assert.IsType<List<Song>>(okObjectResult.Value);
+      var returnValue = Assert.IsType<List<Models.Song>>(okObjectResult.Value);
       Assert.Equal(songs.Count, returnValue.Count);
       Assert.Equal(songs[0].Name, returnValue[0].Name);
       Assert.Equal(songs[1].Name, returnValue[1].Name);
@@ -47,9 +47,9 @@ namespace SongAPI.UnitTests
     public async void GetSongs_NoSongs_ReturnsNotFound()
     {
       // Arrange
-      var songs = new List<Song>();
+      var songs = new List<Models.Song>();
 
-      var iEnumSongs = (IEnumerable<Song>)songs;
+      var iEnumSongs = (IEnumerable<Models.Song>)songs;
       var methodResult = Tuple.Create(iEnumSongs, Result.NotFound);
 
       var songServiceMock = new Mock<ISongService>();
@@ -72,7 +72,7 @@ namespace SongAPI.UnitTests
     {
       // Arrange
       var id = 1;
-      var song = new Song() { Id = 1, Name = "The Dying Song", Artist = "Slipknot", ImageUrl = "" };
+      var song = new Models.Song() { Id = 1, Name = "The Dying Song", Artist = "Slipknot", ImageUrl = "" };
 
       var songServiceMock = new Mock<ISongService>();
       var methodResult = Tuple.Create(song, Result.Ok);
@@ -88,7 +88,7 @@ namespace SongAPI.UnitTests
 
       // Assert      
       var okObjectResult = Assert.IsType<OkObjectResult>(response);
-      var returnValue = Assert.IsType<Song>(okObjectResult.Value);
+      var returnValue = Assert.IsType<Models.Song>(okObjectResult.Value);
       Assert.NotNull(returnValue);
       Assert.Equal(song.Name, returnValue.Name);
       Assert.Equal(id, returnValue.Id);
@@ -100,7 +100,7 @@ namespace SongAPI.UnitTests
     public async void InvalidGetSongTheory_ReturnsNotFound(int id)
     {
       // Arrange
-      var song = new Song() { Id = 1, Name = "The Dying Song", Artist = "Slipknot", ImageUrl = "" };
+      var song = new Models.Song() { Id = 1, Name = "The Dying Song", Artist = "Slipknot", ImageUrl = "" };
 
       var songServiceMock = new Mock<ISongService>();
       var methodResult = Tuple.Create(song, Result.NotFound);
@@ -122,13 +122,13 @@ namespace SongAPI.UnitTests
     public async void PostSong_GivenValidSong_ReturnsCreatedAt()
     {
       // Arrange
-      var newSong = new Song() { Id = 1, Name = "The Dying Song", Artist = "Slipknot", ImageUrl = "" };
+      var newSong = new Models.Song() { Id = 1, Name = "The Dying Song", Artist = "Slipknot", ImageUrl = "" };
       var methodResult = Tuple.Create(newSong, Result.Ok);
 
       var songServiceMock = new Mock<ISongService>();
 
 #pragma warning disable CS8620
-      songServiceMock.Setup(s => s.AddSong(It.IsAny<Song>())).Returns(Task.FromResult(methodResult));
+      songServiceMock.Setup(s => s.AddSong(It.IsAny<Models.Song>())).Returns(Task.FromResult(methodResult));
 #pragma warning restore CS8620
 
       var controller = new SongController(songServiceMock.Object);
@@ -138,7 +138,7 @@ namespace SongAPI.UnitTests
 
       // Assert 
       var createdAtResult = Assert.IsType<CreatedAtActionResult>(response);
-      var returnValue = Assert.IsType<Song>(createdAtResult.Value);
+      var returnValue = Assert.IsType<Models.Song>(createdAtResult.Value);
       Assert.Equal(newSong, returnValue);
     }
 
@@ -148,12 +148,12 @@ namespace SongAPI.UnitTests
       // Arrange
       var songServiceMock = new Mock<ISongService>();
       var result = Result.Ok;
-      songServiceMock.Setup(s => s.UpdateSong(It.IsAny<int>(), It.IsAny<Song>())).Returns(Task.FromResult(result));
+      songServiceMock.Setup(s => s.UpdateSong(It.IsAny<int>(), It.IsAny<Models.Song>())).Returns(Task.FromResult(result));
 
       var controller = new SongController(songServiceMock.Object);
 
       var id = 1;
-      var updatedSong = new Song() { Id = 1, Name = "The Dying Song", Artist = "Slipknot", ImageUrl = "" };
+      var updatedSong = new Models.Song() { Id = 1, Name = "The Dying Song", Artist = "Slipknot", ImageUrl = "" };
 
       // Act
       var response = await controller.PutSong(id, updatedSong);
@@ -168,12 +168,12 @@ namespace SongAPI.UnitTests
       // Arrange
       var songServiceMock = new Mock<ISongService>();
       var result = Result.BadRequest;
-      songServiceMock.Setup(s => s.UpdateSong(It.IsAny<int>(), It.IsAny<Song>())).Returns(Task.FromResult(result));
+      songServiceMock.Setup(s => s.UpdateSong(It.IsAny<int>(), It.IsAny<Models.Song>())).Returns(Task.FromResult(result));
 
       var controller = new SongController(songServiceMock.Object);
 
       var id = 1;
-      var updatedSong = new Song() { Id = 1, Name = "The Dying Song", Artist = "Slipknot", ImageUrl = "" };
+      var updatedSong = new Models.Song() { Id = 1, Name = "The Dying Song", Artist = "Slipknot", ImageUrl = "" };
 
       // Act
       var response = await controller.PutSong(id, updatedSong);

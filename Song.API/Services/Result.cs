@@ -1,4 +1,4 @@
-namespace SongAPI.Services
+namespace Song.API.Services
 {
   public enum Result
   {

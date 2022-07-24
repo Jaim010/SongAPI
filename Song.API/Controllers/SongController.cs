@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using SongAPI.Models;
-using SongAPI.Services;
+using Song.API.Models;
+using Song.API.Services;
 
-namespace SongAPI.Controllers
+namespace Song.API.Controllers
 {
   [ApiController]
   [Route("api/[controller]")]
@@ -25,7 +25,7 @@ namespace SongAPI.Controllers
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetSongs()
     {
-      (IEnumerable<Song>? songs, Result result) = await _service.GetSongs();
+      (IEnumerable<Models.Song>? songs, Result result) = await _service.GetSongs();
 
       if (result == Result.NotFound)
         return NotFound();
@@ -45,7 +45,7 @@ namespace SongAPI.Controllers
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetSong(int id)
     {
-      (Song? song, Result result) = await _service.GetSong(id);
+      (Models.Song? song, Result result) = await _service.GetSong(id);
 
       if (result == Result.NotFound)
         return NotFound();
@@ -81,7 +81,7 @@ namespace SongAPI.Controllers
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> PutSong(int id, Song song)
+    public async Task<IActionResult> PutSong(int id, Models.Song song)
     {
       Result result = await _service.UpdateSong(id, song);
       switch (result)
@@ -121,9 +121,9 @@ namespace SongAPI.Controllers
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> PostSong(Song song)
+    public async Task<IActionResult> PostSong(Models.Song song)
     {
-      (Song? postedSong, Result result) = await _service.AddSong(song);
+      (Models.Song? postedSong, Result result) = await _service.AddSong(song);
 
       if (result == Result.Err)
         return Problem("Entity set 'SongContext.Songs' is null.");

@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <RootNamespace>SongAPI.UnitTests</RootNamespace>
+    <RootNamespace>Song.API.UnitTests</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 
@@ -25,7 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SongAPI\SongAPI.csproj" />
+    <ProjectReference Include="..\Song.API\Song.API.csproj" />
   </ItemGroup>
 
 </Project>

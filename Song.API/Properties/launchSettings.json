@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "SongAPI": {
+    "Song.API": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

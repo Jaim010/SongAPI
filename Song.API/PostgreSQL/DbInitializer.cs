@@ -1,4 +1,4 @@
-namespace SongAPI.PostgreSQL
+namespace Song.API.PostgreSQL
 {
   public static class DbInitializer
   {

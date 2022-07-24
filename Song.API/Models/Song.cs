@@ -1,7 +1,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace SongAPI.Models
+namespace Song.API.Models
 {
   public class Song
   {

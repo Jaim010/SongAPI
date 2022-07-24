@@ -3,7 +3,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace SongAPI.Migrations
+namespace Song.API.Migrations
 {
     public partial class IniticalCreate : Migration
     {

@@ -3,9 +3,9 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc.Testing;
-using SongAPI.Models;
+using Song.API.Models;
 
-namespace SongAPI.IntergrationTests
+namespace Song.API.IntergrationTests
 {
   public class SongControllerTests
       : IClassFixture<CustomWebApplicationFactory<Program>>
@@ -34,7 +34,7 @@ namespace SongAPI.IntergrationTests
       // Act
       var response = await _client.GetAsync("/api/song/");
       var responseString = await response.Content.ReadAsStringAsync();
-      var songs = JsonSerializer.Deserialize<List<Song>>(responseString, _jsonSerializerOptions);
+      var songs = JsonSerializer.Deserialize<List<Models.Song>>(responseString, _jsonSerializerOptions);
 
       // Assert
       response.EnsureSuccessStatusCode();
@@ -52,7 +52,7 @@ namespace SongAPI.IntergrationTests
       // Act
       var response = await _client.GetAsync($"/api/song/{id}");
       var responseString = await response.Content.ReadAsStringAsync();
-      var song = JsonSerializer.Deserialize<Song>(responseString, _jsonSerializerOptions);
+      var song = JsonSerializer.Deserialize<Models.Song>(responseString, _jsonSerializerOptions);
 
       // Assert
       response.EnsureSuccessStatusCode();
@@ -80,7 +80,7 @@ namespace SongAPI.IntergrationTests
     {
       // Arrange
       var id = 1;
-      var song = new Song() { Id = 1, Name = "A Place For My Head", Artist = "Linkin Park", ImageUrl = "https://picsum.photos/200/300" };
+      var song = new Models.Song() { Id = 1, Name = "A Place For My Head", Artist = "Linkin Park", ImageUrl = "https://picsum.photos/200/300" };
       var jsonStr = JsonSerializer.Serialize(song);
       var content = new StringContent(jsonStr, Encoding.UTF8, "application/json");
 
@@ -88,7 +88,7 @@ namespace SongAPI.IntergrationTests
       var response = await _client.PutAsync($"/api/song/{id}", content);
 
       // Assert
-      response.EnsureSuccessStatusCode();
+      // response.EnsureSuccessStatusCode();
       Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
     }
 
@@ -97,7 +97,7 @@ namespace SongAPI.IntergrationTests
     {
       // Arrange
       var id = -1;
-      var song = new Song() { Id = 1, Name = "A Place For My Head", Artist = "Linkin Park", ImageUrl = "https://picsum.photos/200/300" };
+      var song = new Models.Song() { Id = 1, Name = "A Place For My Head", Artist = "Linkin Park", ImageUrl = "https://picsum.photos/200/300" };
       var jsonStr = JsonSerializer.Serialize(song);
       var content = new StringContent(jsonStr, Encoding.UTF8, "application/json");
 
@@ -113,7 +113,7 @@ namespace SongAPI.IntergrationTests
     {
       // Arrange
       var id = -1;
-      var song = new Song() { Id = -1, Name = "A Place For My Head", Artist = "Linkin Park", ImageUrl = "https://picsum.photos/200/300" };
+      var song = new Models.Song() { Id = -1, Name = "A Place For My Head", Artist = "Linkin Park", ImageUrl = "https://picsum.photos/200/300" };
       var jsonStr = JsonSerializer.Serialize(song);
       var content = new StringContent(jsonStr, Encoding.UTF8, "application/json");
 
@@ -129,7 +129,7 @@ namespace SongAPI.IntergrationTests
     public async void PostSong_GivenAlbum_ReturnsAlbum()
     {
       // Arrange 
-      var song = new Song() { Name = "X Gon' Give It To Ya", Artist = "DMX", ImageUrl = "https://picsum.photos/200/300" };
+      var song = new Models.Song() { Name = "X Gon' Give It To Ya", Artist = "DMX", ImageUrl = "https://picsum.photos/200/300" };
       var jsonStr = JsonSerializer.Serialize(song);
       var content = new StringContent(jsonStr, Encoding.UTF8, "application/json");
 
@@ -145,7 +145,7 @@ namespace SongAPI.IntergrationTests
     public async void DeleteSong_GivenExistingID_ReturnsNoContent()
     {
       // Arrange 
-      var id = 1;
+      var id = 4;
 
       // Act
       var response = await _client.DeleteAsync($"/api/song/{id}");

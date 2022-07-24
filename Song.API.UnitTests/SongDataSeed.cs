@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using System;
-using SongAPI.PostgreSQL;
-using SongAPI.Models;
+using Song.API.PostgreSQL;
+using Song.API.Models;
 
-namespace SongAPI.UnitTests
+namespace Song.API.UnitTests
 {
   public abstract class SongDataSeed : IDisposable
   {
@@ -31,7 +31,7 @@ namespace SongAPI.UnitTests
     {
       if (await context.Songs.CountAsync() == 0)
       {
-        var songs = new List<Song> {
+        var songs = new List<Models.Song> {
           new() { Id=1, Name="The Dying Song", Artist="Slipknot", ImageUrl=""},
           new() { Id=2, Name="Faint", Artist="Linkin Park", ImageUrl=""},
           new() { Id=3, Name="Shogun", Artist="Trivium", ImageUrl=""},

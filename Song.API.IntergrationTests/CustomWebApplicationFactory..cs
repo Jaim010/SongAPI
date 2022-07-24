@@ -4,9 +4,9 @@ using Microsoft.Build.Framework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using SongAPI.PostgreSQL;
+using Song.API.PostgreSQL;
 
-namespace SongAPI.IntergrationTests
+namespace Song.API.IntergrationTests
 {
   public class CustomWebApplicationFactory<TStartup>
     : WebApplicationFactory<TStartup> where TStartup : class

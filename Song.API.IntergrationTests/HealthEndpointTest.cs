@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc.Testing;
 
-namespace SongAPI.IntergrationTests {
+namespace Song.API.IntergrationTests {
   public class HealthEndPointTest {
     private readonly HttpClient _client;
 

@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using SongAPI.Models;
-using SongAPI.PostgreSQL;
+using Song.API.Models;
+using Song.API.PostgreSQL;
 
-namespace SongAPI.Services
+namespace Song.API.Services
 {
   public class SongService : ISongService
   {
@@ -11,7 +11,7 @@ namespace SongAPI.Services
     public SongService(SongContext context)
       => _context = context;
 
-    public async Task<Tuple<IEnumerable<Song>?, Result>> GetSongs()
+    public async Task<Tuple<IEnumerable<Models.Song>?, Result>> GetSongs()
     {
       if (_context.Songs == null)
       {
@@ -20,12 +20,12 @@ namespace SongAPI.Services
       return new(await _context.Songs.ToListAsync(), Result.Ok);
     }
 
-    public async Task<Tuple<Song?, Result>> GetSong(int id)
+    public async Task<Tuple<Models.Song?, Result>> GetSong(int id)
     {
       if (_context.Songs == null)
         return new(null, Result.NotFound);
 
-      Song? song = await _context.Songs.FindAsync(id);
+      Models.Song? song = await _context.Songs.FindAsync(id);
 
       if (song == null)
         return new(null, Result.NotFound);
@@ -33,7 +33,7 @@ namespace SongAPI.Services
       return new(song, Result.Ok);
     }
 
-    public async Task<Result> UpdateSong(int id, Song song)
+    public async Task<Result> UpdateSong(int id, Models.Song song)
     {
       if (id != song.Id)
         return Result.BadRequest;
@@ -59,7 +59,7 @@ namespace SongAPI.Services
       return Result.Ok;
     }
 
-    public async Task<Tuple<Song?, Result>> AddSong(Song song)
+    public async Task<Tuple<Models.Song?, Result>> AddSong(Models.Song song)
     {
       if (_context.Songs == null)
         return new(null, Result.Err);

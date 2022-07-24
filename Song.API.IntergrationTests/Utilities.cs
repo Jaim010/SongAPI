@@ -1,7 +1,7 @@
-using SongAPI.Models;
-using SongAPI.PostgreSQL;
+using Song.API.Models;
+using Song.API.PostgreSQL;
 
-namespace SongAPI.IntergrationTests
+namespace Song.API.IntergrationTests
 {
   public class Utilities
   {
@@ -17,7 +17,7 @@ namespace SongAPI.IntergrationTests
       InitializeDbForTets(db);
     }
 
-    private static List<Song> GetSeedingSongs() => new List<Song>()
+    private static List<Models.Song> GetSeedingSongs() => new List<Models.Song>()
     {
       new() { Id=1, Name="The Dying Song", Artist="Slipknot", ImageUrl=""},
       new() { Id=2, Name="Faint", Artist="Linkin Park", ImageUrl=""},
