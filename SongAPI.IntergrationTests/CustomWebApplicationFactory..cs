@@ -19,7 +19,9 @@ namespace SongAPI.IntergrationTests
           d => d.ServiceType ==
             typeof(DbContextOptions<SongContext>));
 
+#pragma warning disable CS8604
         services.Remove(descriptor);
+#pragma warning restore CS8604
 
         services.AddDbContext<SongContext>(options =>
         {

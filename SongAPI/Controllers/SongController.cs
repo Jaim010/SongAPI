@@ -14,7 +14,6 @@ namespace SongAPI.Controllers
     public SongController(ISongService service)
      => _service = service;
 
-    // GET: api/Song/
     /// <summary>
     /// Gets all Songs.
     /// </summary>
@@ -34,7 +33,6 @@ namespace SongAPI.Controllers
       return Ok(songs);
     }
 
-    // GET: api/Song/5
     /// <summary>
     /// Gets a Song by ID.
     /// </summary>
@@ -55,7 +53,6 @@ namespace SongAPI.Controllers
       return Ok(song);
     }
 
-    // PUT: api/Song/5
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     /// <summary>
     /// Modifies an existing Song entity.
@@ -66,13 +63,13 @@ namespace SongAPI.Controllers
     /// <remarks>
     /// Sample request:
     /// 
-    ///   PUT /api/Song/1
-    ///   {
-    ///     "id": 1,
-    ///     "name": "Unstoppable",
-    ///     "artist": "For The Fallen Dreams",
-    ///     "imageurl": "https://picsum.photos/200/300"
-    ///   }
+    ///     PUT /Song/1
+    ///     {
+    ///         "id": 1,
+    ///         "name": "Unstoppable",
+    ///         "artist": "For The Fallen Dreams",
+    ///         "imageUrl": "https://picsum.photos/200/300"
+    ///     }
     /// 
     /// </remarks>
     /// <response code="200">If the modification was succesfull</response>
@@ -103,8 +100,6 @@ namespace SongAPI.Controllers
       }
     }
 
-    // POST: api/Song
-    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     /// <summary>
     /// Creates a new Song.
     /// </summary>
@@ -112,14 +107,14 @@ namespace SongAPI.Controllers
     /// <returns>A newly created Song</returns>
     /// <remarks>
     /// Sample request:
-    /// 
-    ///   POST /api/Song/
-    ///   {
-    ///     "name": "sTraNgeRs",
-    ///     "artist": "Bring Me The Horizon",
-    ///     "imageurl": "https://picsum.photos/200/300"
-    ///   }
-    /// 
+    ///
+    ///     POST /Song
+    ///     {
+    ///         "name": "sTraNgeRs",
+    ///         "artist": "Bring Me The Horizon",
+    ///         "imageUrl": "https://picsum.photos/200/300"
+    ///     }
+    ///
     /// </remarks>
     /// <response code="201">Returns the newly created song</response>
     /// <response code="400">If the song is null</response>
@@ -136,7 +131,6 @@ namespace SongAPI.Controllers
       return CreatedAtAction("GetSong", new { id = song.Id }, song);
     }
 
-    // DELETE: api/Song/5
     /// <summary>
     /// Deletes a specific Song.
     /// </summary>
