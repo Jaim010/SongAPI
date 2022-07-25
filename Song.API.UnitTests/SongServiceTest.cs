@@ -12,13 +12,13 @@ public class SongServiceTest : SongDataSeed
     var service = new SongService(this.context);
 
     // Act
-    (var songsIEnum, var result) = (await service.GetSongs());
+    var response = await service.GetSongs();
 
     // Assert
-    Assert.Equal(Result.Ok, result);
+    Assert.Equal(Result.Ok, response.Result);
 
-    Assert.NotNull(songsIEnum);
-    var songs = songsIEnum?.ToList();
+    Assert.NotNull(response.Data);
+    var songs = response.Data?.ToList();
     Assert.Equal(4, songs?.Count);
 
     Assert.Equal("The Dying Song", songs?[0].Name);
@@ -35,10 +35,11 @@ public class SongServiceTest : SongDataSeed
     var service = new SongService(this.context);
 
     // Act
-    (var song, var result) = await service.GetSong(id);
+    var response = await service.GetSong(id);
 
     // Assert
-    Assert.Equal(Result.Ok, result);
+    Assert.Equal(Result.Ok, response.Result);
+    var song = response.Data;
     Assert.NotNull(song);
     Assert.Equal("The Dying Song", song?.Name);
   }
@@ -52,11 +53,11 @@ public class SongServiceTest : SongDataSeed
     var service = new SongService(this.context);
 
     // Act
-    (var song, var result) = await service.GetSong(id);
+    var response = await service.GetSong(id);
 
     // Assert
-    Assert.Equal(expectedResult, result);
-    Assert.Equal(expectedSong, song);
+    Assert.Equal(expectedResult, response.Result);
+    Assert.Equal(expectedSong, response.Data);
   }
 
   [Fact]
@@ -73,10 +74,11 @@ public class SongServiceTest : SongDataSeed
     };
 
     // Act
-    (var song, var result) = await service.AddSong(newSong);
+    var response = await service.AddSong(newSong);
 
     // Assert
-    Assert.Equal(Result.Ok, result);
+    Assert.Equal(Result.Ok, response.Result);
+    var song = response.Data;
     Assert.NotNull(song);
     Assert.Equal(newSong.Name, song?.Name);
   }
@@ -88,7 +90,8 @@ public class SongServiceTest : SongDataSeed
     var service = new SongService(this.context);
     var id = 1;
 
-    (var song, var result) = await service.GetSong(id);
+    var responseGet = await service.GetSong(id);
+    var song = responseGet.Data;
 
     if (song == null)
       throw new Exception($"service.GetSong() with id: {id} returned 'null'");
@@ -97,10 +100,10 @@ public class SongServiceTest : SongDataSeed
     song.Name = "25 To Life";
 
     // Act
-    result = await service.UpdateSong(id, song);
+    var responsePut = await service.UpdateSong(id, song);
 
     // Assert
-    Assert.Equal(Result.Ok, result);
+    Assert.Equal(Result.Ok, responsePut.Result);
   }
 
   [Fact]
@@ -112,7 +115,8 @@ public class SongServiceTest : SongDataSeed
     var notMatchingId = -1;
 
     // Issue due to EF tracking. Underlying EF ID is kept, unable to test otherwise. 
-    (var song, var result) = await service.GetSong(id);
+    var responseGet = await service.GetSong(id);
+    var song = responseGet.Data;
 
     if (song == null)
       throw new Exception($"service.GetSong() with id: {id} returned 'null'");
@@ -121,10 +125,10 @@ public class SongServiceTest : SongDataSeed
     song.Name = "25 To Life";
 
     // Act
-    result = await service.UpdateSong(notMatchingId, song);
+    var responsePut = await service.UpdateSong(notMatchingId, song);
 
     // Assert
-    Assert.Equal(Result.BadRequest, result);
+    Assert.Equal(Result.BadRequest, responsePut.Result);
   }
 
   [Fact]
@@ -135,10 +139,10 @@ public class SongServiceTest : SongDataSeed
     var id = 1;
 
     // Act
-    var result = await service.DeleteSong(id);
+    var response = await service.DeleteSong(id);
 
     // Assert
-    Assert.Equal(Result.Ok, result);
+    Assert.Equal(Result.Ok, response.Result);
   }
 
   [Fact]
@@ -149,9 +153,9 @@ public class SongServiceTest : SongDataSeed
     var id = -1;
 
     // Act
-    var result = await service.DeleteSong(id);
+    var response = await service.DeleteSong(id);
 
     // Assert
-    Assert.Equal(Result.NotFound, result);
+    Assert.Equal(Result.NotFound, response.Result);
   }
 }

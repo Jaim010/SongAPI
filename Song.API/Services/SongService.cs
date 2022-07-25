@@ -11,32 +11,46 @@ namespace Song.API.Services
     public SongService(SongContext context)
       => _context = context;
 
-    public async Task<Tuple<IEnumerable<Models.Song>?, Result>> GetSongs()
+
+    public async Task<ServiceResponse<IEnumerable<Models.Song>>> GetSongs()
     {
       if (_context.Songs == null)
+        return new()
+        {
+          Result = Result.NotFound,
+        };
+
+      return new()
       {
-        return new(null, Result.NotFound);
-      }
-      return new(await _context.Songs.ToListAsync(), Result.Ok);
+        Data = await _context.Songs.ToListAsync(),
+        Result = Result.Ok,
+      };
     }
 
-    public async Task<Tuple<Models.Song?, Result>> GetSong(int id)
+    public async Task<ServiceResponse<Models.Song>> GetSong(int id)
     {
       if (_context.Songs == null)
-        return new(null, Result.NotFound);
+        return new()
+        {
+          Result = Result.NotFound,
+        };
 
       Models.Song? song = await _context.Songs.FindAsync(id);
 
       if (song == null)
-        return new(null, Result.NotFound);
+        return new() { Result = Result.NotFound };
 
-      return new(song, Result.Ok);
+      return new()
+      {
+        Data = song,
+        Result = Result.Ok,
+      };
     }
 
-    public async Task<Result> UpdateSong(int id, Models.Song song)
+    public async Task<ServiceResponse> UpdateSong(int id, Models.Song song)
     {
       if (id != song.Id)
-        return Result.BadRequest;
+        return new() { Result = Result.BadRequest };
 
       _context.Entry(song).State = EntityState.Modified;
 
@@ -44,45 +58,46 @@ namespace Song.API.Services
       {
         await _context.SaveChangesAsync();
       }
-      catch (DbUpdateConcurrencyException)
+      catch (DbUpdateException)
       {
         if (!SongExists(id))
-        {
-          return Result.NotFound;
-        }
+          return new() { Result = Result.NotFound };
         else
-        {
           throw;
-        }
       }
 
-      return Result.Ok;
+      return new() { Result = Result.Ok };
     }
 
-    public async Task<Tuple<Models.Song?, Result>> AddSong(Models.Song song)
+    public async Task<ServiceResponse<Models.Song>> AddSong(Models.Song song)
     {
       if (_context.Songs == null)
-        return new(null, Result.Err);
+        return new() { Result = Result.Err };
 
       _context.Songs.Add(song);
       await _context.SaveChangesAsync();
 
-      return new(song, Result.Ok);
+      return new()
+      {
+        Result = Result.Ok,
+        Data = song,
+      };
     }
 
-    public async Task<Result> DeleteSong(int id)
+    public async Task<ServiceResponse> DeleteSong(int id)
     {
       if (_context.Songs == null)
-        return Result.NotFound;
+        return new() { Result = Result.NotFound };
 
-      var song = await _context.Songs.FindAsync(id);
+      Models.Song? song = await _context.Songs.FindAsync(id);
+
       if (song == null)
-        return Result.NotFound;
+        return new() { Result = Result.NotFound };
 
       _context.Songs.Remove(song);
       await _context.SaveChangesAsync();
 
-      return Result.Ok;
+      return new() { Result = Result.Ok };
     }
 
     private bool SongExists(int id)

@@ -25,12 +25,12 @@ namespace Song.API.Controllers
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetSongs()
     {
-      (IEnumerable<Models.Song>? songs, Result result) = await _service.GetSongs();
+      ServiceResponse<IEnumerable<Models.Song>> response = await _service.GetSongs();
 
-      if (result == Result.NotFound)
+      if (response.Result == Result.NotFound)
         return NotFound();
 
-      return Ok(songs);
+      return Ok(response.Data);
     }
 
     /// <summary>
@@ -45,12 +45,12 @@ namespace Song.API.Controllers
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetSong(int id)
     {
-      (Models.Song? song, Result result) = await _service.GetSong(id);
+      ServiceResponse<Models.Song> response = await _service.GetSong(id);
 
-      if (result == Result.NotFound)
+      if (response.Result == Result.NotFound)
         return NotFound();
 
-      return Ok(song);
+      return Ok(response.Data);
     }
 
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
@@ -83,8 +83,8 @@ namespace Song.API.Controllers
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> PutSong(int id, Models.Song song)
     {
-      Result result = await _service.UpdateSong(id, song);
-      switch (result)
+      ServiceResponse response = await _service.UpdateSong(id, song);
+      switch (response.Result)
       {
         case Result.BadRequest:
           return BadRequest();
@@ -123,12 +123,12 @@ namespace Song.API.Controllers
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> PostSong(Models.Song song)
     {
-      (Models.Song? postedSong, Result result) = await _service.AddSong(song);
+      ServiceResponse<Models.Song> response = await _service.AddSong(song);
 
-      if (result == Result.Err)
+      if (response.Result == Result.Err)
         return Problem("Entity set 'SongContext.Songs' is null.");
 
-      return CreatedAtAction("GetSong", new { id = song.Id }, song);
+      return CreatedAtAction("GetSong", new { id = response.Data?.Id }, response.Data);
     }
 
     /// <summary>
@@ -143,8 +143,8 @@ namespace Song.API.Controllers
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteSong(int id)
     {
-      Result result = await _service.DeleteSong(id);
-      if (result == Result.NotFound)
+      ServiceResponse response = await _service.DeleteSong(id);
+      if (response.Result == Result.NotFound)
         return NotFound();
 
       return NoContent();

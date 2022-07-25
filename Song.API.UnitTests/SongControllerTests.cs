@@ -19,8 +19,12 @@ namespace Song.API.UnitTests
           new() { Id=4, Name="Like You Do", Artist="Joji", ImageUrl=""},
         };
 
-      var iEnumSongs = (IEnumerable<Models.Song>)songs;
-      var methodResult = Tuple.Create(iEnumSongs, Result.Ok);
+      var songsIEnum = (IEnumerable<Models.Song>)songs;
+      var methodResult = new ServiceResponse<IEnumerable<Models.Song>>()
+      {
+        Data = songsIEnum,
+        Result = Result.Ok,
+      };
 
       var songServiceMock = new Mock<ISongService>();
 
@@ -49,8 +53,12 @@ namespace Song.API.UnitTests
       // Arrange
       var songs = new List<Models.Song>();
 
-      var iEnumSongs = (IEnumerable<Models.Song>)songs;
-      var methodResult = Tuple.Create(iEnumSongs, Result.NotFound);
+      var songsIEnum = (IEnumerable<Models.Song>)songs;
+      var methodResult = new ServiceResponse<IEnumerable<Models.Song>>()
+      {
+        Data = songsIEnum,
+        Result = Result.NotFound,
+      };
 
       var songServiceMock = new Mock<ISongService>();
 
@@ -75,7 +83,11 @@ namespace Song.API.UnitTests
       var song = new Models.Song() { Id = 1, Name = "The Dying Song", Artist = "Slipknot", ImageUrl = "" };
 
       var songServiceMock = new Mock<ISongService>();
-      var methodResult = Tuple.Create(song, Result.Ok);
+      var methodResult = new ServiceResponse<Models.Song>()
+      {
+        Data = song,
+        Result = Result.Ok,
+      };
 
 #pragma warning disable CS8620 
       songServiceMock.Setup(s => s.GetSong(It.IsAny<int>())).Returns(Task.FromResult(methodResult));
@@ -103,7 +115,11 @@ namespace Song.API.UnitTests
       var song = new Models.Song() { Id = 1, Name = "The Dying Song", Artist = "Slipknot", ImageUrl = "" };
 
       var songServiceMock = new Mock<ISongService>();
-      var methodResult = Tuple.Create(song, Result.NotFound);
+      var methodResult = new ServiceResponse<Models.Song>()
+      {
+        Data = song,
+        Result = Result.NotFound
+      };
 
 #pragma warning disable CS8620 
       songServiceMock.Setup(s => s.GetSong(It.IsAny<int>())).Returns(Task.FromResult(methodResult));
@@ -123,7 +139,11 @@ namespace Song.API.UnitTests
     {
       // Arrange
       var newSong = new Models.Song() { Id = 1, Name = "The Dying Song", Artist = "Slipknot", ImageUrl = "" };
-      var methodResult = Tuple.Create(newSong, Result.Ok);
+      var methodResult = new ServiceResponse<Models.Song>()
+      {
+        Data = newSong,
+        Result = Result.Ok
+      };
 
       var songServiceMock = new Mock<ISongService>();
 
@@ -147,8 +167,8 @@ namespace Song.API.UnitTests
     {
       // Arrange
       var songServiceMock = new Mock<ISongService>();
-      var result = Result.Ok;
-      songServiceMock.Setup(s => s.UpdateSong(It.IsAny<int>(), It.IsAny<Models.Song>())).Returns(Task.FromResult(result));
+      var methodResult = new ServiceResponse() { Result = Result.Ok };
+      songServiceMock.Setup(s => s.UpdateSong(It.IsAny<int>(), It.IsAny<Models.Song>())).Returns(Task.FromResult(methodResult));
 
       var controller = new SongController(songServiceMock.Object);
 
@@ -167,8 +187,8 @@ namespace Song.API.UnitTests
     {
       // Arrange
       var songServiceMock = new Mock<ISongService>();
-      var result = Result.BadRequest;
-      songServiceMock.Setup(s => s.UpdateSong(It.IsAny<int>(), It.IsAny<Models.Song>())).Returns(Task.FromResult(result));
+      var methodResult = new ServiceResponse() { Result = Result.BadRequest };
+      songServiceMock.Setup(s => s.UpdateSong(It.IsAny<int>(), It.IsAny<Models.Song>())).Returns(Task.FromResult(methodResult));
 
       var controller = new SongController(songServiceMock.Object);
 
@@ -187,8 +207,8 @@ namespace Song.API.UnitTests
     {
       // Arrange
       var songServiceMock = new Mock<ISongService>();
-      var result = Result.Ok;
-      songServiceMock.Setup(s => s.DeleteSong(It.IsAny<int>())).Returns(Task.FromResult(result));
+      var methodResult = new ServiceResponse() { Result = Result.Ok };
+      songServiceMock.Setup(s => s.DeleteSong(It.IsAny<int>())).Returns(Task.FromResult(methodResult));
 
       var controller = new SongController(songServiceMock.Object);
 
@@ -207,8 +227,8 @@ namespace Song.API.UnitTests
     {
       // Arrange
       var songServiceMock = new Mock<ISongService>();
-      var result = Result.NotFound;
-      songServiceMock.Setup(s => s.DeleteSong(It.IsAny<int>())).Returns(Task.FromResult(result));
+      var methodResult = new ServiceResponse() { Result = Result.NotFound };
+      songServiceMock.Setup(s => s.DeleteSong(It.IsAny<int>())).Returns(Task.FromResult(methodResult));
 
       var controller = new SongController(songServiceMock.Object);
 
