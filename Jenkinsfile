@@ -27,7 +27,7 @@ pipeline {
                 }
             }
             steps {
-                echo "Main branch with version {NEW_VERSION}"
+                echo "Main branch with version ${NEW_VERSION}"
             }
         }   
     }
