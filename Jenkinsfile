@@ -1,15 +1,20 @@
 pipeline {
     agent any 
     stages {
-        stage('Build') {
+        stage('Build/Publish') {
             steps {
-                echo 'Restoring...'
                 bat 'dotnet restore'
-                echo 'Restored!'
-                
-                echo 'Building ....' 
-                bat 'dotnet build'
-                echo 'Build!'
+                bat 'dotnet publish --no-restore'
+            }
+        }
+        stage('Unit tests') {
+            steps {
+                bat 'dotnet test --no-build --verbosity normal .\Song.API.UnitTests\'
+            }
+        }
+        stage('Intergration tests') {
+            steps {
+                bat 'dotnet test --no-build --verbosity normal .\Song.API.IntergrationTests\'
             }
         }
     }
