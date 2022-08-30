@@ -9,12 +9,12 @@ pipeline {
         }
         stage('Unit tests') {
             steps {
-                bat 'dotnet test --no-build --verbosity normal .\Song.API.UnitTests\'
+                bat 'dotnet test --no-build --verbosity normal .\\Song.API.UnitTests\\'
             }
         }
         stage('Intergration tests') {
             steps {
-                bat 'dotnet test --no-build --verbosity normal .\Song.API.IntergrationTests\'
+                bat 'dotnet test --no-build --verbosity normal .\\Song.API.IntergrationTests\\'
             }
         }
     }
