@@ -1,5 +1,7 @@
 pipeline {
-    agent { dockerfile true }
+    agent { 
+        dockerfile true 
+    }
     environment {
         NEW_VERSION = '1.1.0'
     }
