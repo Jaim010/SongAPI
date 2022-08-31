@@ -1,15 +1,12 @@
 pipeline {
-  agent { label "linux" }
-  stages {
-    stage("Build docker image") {
-      steps {
-        sh "docker build -t songapi ."
-      }
+    agent { dockerfile true }
+    stages {
+        stage('Test') {
+            steps {
+                sh '''
+                dotnet --version
+                '''
+            }
+        }
     }
-    stage("Run docker image") {
-      steps {
-        sh "docker run songapi"
-      }
-    }
-  }
 }
