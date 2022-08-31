@@ -6,18 +6,18 @@ pipeline {
     stages {
         stage('Build/Publish') {
             steps {
-                sh 'dotnet restore'
-                sh 'dotnet publish --no-restore'
+                bat 'dotnet restore'
+                bat 'dotnet publish --no-restore'
             }
         }
         stage('Unit tests') {
             steps {
-                sh 'dotnet test --no-build --verbosity normal .\\Song.API.UnitTests\\'
+                bat 'dotnet test --no-build --verbosity normal .\\Song.API.UnitTests\\'
             }
         }
         stage('Intergration tests') {
             steps {
-                sh 'dotnet test --no-build --verbosity normal .\\Song.API.IntergrationTests\\'
+                bat 'dotnet test --no-build --verbosity normal .\\Song.API.IntergrationTests\\'
             }
         }
         stage('testing-commands') {
