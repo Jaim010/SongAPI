@@ -3,7 +3,9 @@ pipeline {
   agent { docker true }
   stages {
     stage {
-      bat "dotnet --version"
+      steps {
+        bat "dotnet --version"
+      }
     }
   }
 }
