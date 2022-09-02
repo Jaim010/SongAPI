@@ -1,15 +1,12 @@
 pipeline {
-  agent any
-  stages {
-    stage("Build docker image") {
-      steps {
-        bat "docker build -t songapi ."
-      }
+    agent { dockerfile true }
+    stages {
+        stage('Test') {
+            steps {
+                bat '''
+                dotnet --version
+                '''
+            }
+        }
     }
-    stage("Run docker image") {
-      steps {
-        bat "docker run songapi"
-      }
-    }
-  }
 }
