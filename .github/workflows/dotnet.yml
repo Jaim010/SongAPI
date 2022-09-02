@@ -25,22 +25,10 @@ jobs:
     - name: Build/Publish the application
       run: dotnet publish --no-restore
  
- 
-  unittests:
-    needs: build
-    runs-on: ubuntu-latest
-    
-    steps:
     - name: Test unit tests
       run: dotnet test --no-build --verbosity normal
       working-directory: Song.API.UnitTests/
 
-
-  intergrationtests:
-    needs: build
-    runs-on: ubuntu-latest
-    
-    steps:
     - name: Test intergration tests
       run: dotnet test --no-build --verbosity normal
       working-directory: Song.API.IntergrationTests/
