@@ -1,6 +1,6 @@
 pipeline {
 
-  agent { docker true }
+  agent { dockerfile true }
   stages {
     stage("Get version") {
       steps {
