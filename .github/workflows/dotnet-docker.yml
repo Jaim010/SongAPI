@@ -38,7 +38,7 @@ jobs:
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN}}
-      
+
     - name: Build, tag and push image to Docker Hub registry
       id: build-image
       env:
@@ -48,5 +48,8 @@ jobs:
       run: |
         docker build -t $DOCKERHUB_REGISTRY/$DOCKERHUB_REPOSITORY:$IMAGE_TAG .
         docker push $DOCKERHUB_REGISTRY/$DOCKERHUB_REPOSITORY:$IMAGE_TAG
-        docker push $DOCKERHUB_REGISTRY/$DOCKERHUB_REPOSITORY:latest
         echo "::set-output name=image::$DOCKERHUB_REGISTRY/$DOCKERHUB_REPOSITORY:$IMAGE_TAG"
+        
+        docker build -t $DOCKERHUB_REGISTRY/$DOCKERHUB_REPOSITORY:latest .
+        docker push $DOCKERHUB_REGISTRY/$DOCKERHUB_REPOSITORY:latest
+        echo "::set-output name=image::$DOCKERHUB_REGISTRY/$DOCKERHUB_REPOSITORY:latest"
