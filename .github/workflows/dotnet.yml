@@ -31,6 +31,15 @@ jobs:
 
     - name: Test intergration tests
       run: dotnet test --no-build --verbosity normal
-      working-directory: Song.API.IntergrationTests/
-
-
+      working-directory: Song.API.IntergrationTests/     
+      
+    - name: Build, tag and push image to Docker Hub registry
+      id: build-image
+      env:
+        DOCKERHUB_REGISTRY: jamey010
+        DOCKERHUB_REPOSITORY: openshift-testing
+        IMAGE_TAG: ${{ github.run_number }}
+      run: 
+        docker build -t $DOCKERHUB_REGISTRY/$DOCKERHUB_REPOSITORY:$IMAGE_TAG .
+        docker push $DOCKERHUB_REGISTRY/$DOCKERHUB_REPOSITORY:$IMAGE_TAG
+        echo "::set-output name=image::$DOCKERHUB_REGISTRY/$DOCKERHUB_REPOSITORY:$IMAGE_TAG"
