@@ -46,10 +46,18 @@ jobs:
         DOCKERHUB_REPOSITORY: ${{ secrets.DOCKERHUB_REPOSITORY}}
         IMAGE_TAG: ${{ github.run_number }}
       run: |
-        docker build -t $DOCKERHUB_REGISTRY/$DOCKERHUB_REPOSITORY:$IMAGE_TAG .
-        docker push $DOCKERHUB_REGISTRY/$DOCKERHUB_REPOSITORY:$IMAGE_TAG
+        docker build -t $DOCKERHUB_REGISTRY/$DOCKERHUB_REPOSITORY:$IMAGE_TAG.regular .
+        docker push $DOCKERHUB_REGISTRY/$DOCKERHUB_REPOSITORY:$IMAGE_TAG.regular
         echo "::set-output name=image::$DOCKERHUB_REGISTRY/$DOCKERHUB_REPOSITORY:$IMAGE_TAG"
         
-        docker build -t $DOCKERHUB_REGISTRY/$DOCKERHUB_REPOSITORY:latest .
-        docker push $DOCKERHUB_REGISTRY/$DOCKERHUB_REPOSITORY:latest
+        docker build -t $DOCKERHUB_REGISTRY/$DOCKERHUB_REPOSITORY:latest.regular .
+        docker push $DOCKERHUB_REGISTRY/$DOCKERHUB_REPOSITORY:latest.regular
+        echo "::set-output name=image::$DOCKERHUB_REGISTRY/$DOCKERHUB_REPOSITORY:latest"
+
+        docker build -t $DOCKERHUB_REGISTRY/$DOCKERHUB_REPOSITORY:$IMAGE_TAG.openshift -f OpenShift.Dockerfile .
+        docker push $DOCKERHUB_REGISTRY/$DOCKERHUB_REPOSITORY:$IMAGE_TAG.openshift
+        echo "::set-output name=image::$DOCKERHUB_REGISTRY/$DOCKERHUB_REPOSITORY:$IMAGE_TAG"
+        
+        docker build -t $DOCKERHUB_REGISTRY/$DOCKERHUB_REPOSITORY:latest.openshift -f OpenShift.Dockerfile .
+        docker push $DOCKERHUB_REGISTRY/$DOCKERHUB_REPOSITORY:latest.openshift
         echo "::set-output name=image::$DOCKERHUB_REGISTRY/$DOCKERHUB_REPOSITORY:latest"
