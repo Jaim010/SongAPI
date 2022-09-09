@@ -44,7 +44,7 @@ jobs:
       env:
         DOCKERHUB_REGISTRY: ${{ secrets.DOCKERHUB_REGISTRY}}
         DOCKERHUB_REPOSITORY: ${{ secrets.DOCKERHUB_REPOSITORY}}
-        IMAGE_TAG: ${{ github.run_number }}
+        IMAGE_TAG: 4
       run: |
         docker build -t $DOCKERHUB_REGISTRY/$DOCKERHUB_REPOSITORY:$IMAGE_TAG .
         docker push $DOCKERHUB_REGISTRY/$DOCKERHUB_REPOSITORY:$IMAGE_TAG
