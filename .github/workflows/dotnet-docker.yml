@@ -54,10 +54,10 @@ jobs:
         docker push $DOCKERHUB_REGISTRY/$DOCKERHUB_REPOSITORY:latest
         echo "::set-output name=image::$DOCKERHUB_REGISTRY/$DOCKERHUB_REPOSITORY:latest"
 
-        docker build -t $DOCKERHUB_REGISTRY/$DOCKERHUB_REPOSITORY:$IMAGE_TAG.openshift OpenShift.Dockerfile .
+        docker build -t $DOCKERHUB_REGISTRY/$DOCKERHUB_REPOSITORY:$IMAGE_TAG.openshift -f OpenShift.Dockerfile .
         docker push $DOCKERHUB_REGISTRY/$DOCKERHUB_REPOSITORY:$IMAGE_TAG
         echo "::set-output name=image::$DOCKERHUB_REGISTRY/$DOCKERHUB_REPOSITORY:$IMAGE_TAG"
         
-        docker build -t $DOCKERHUB_REGISTRY/$DOCKERHUB_REPOSITORY:latest.openshift OpenShift.Dockerfile .
+        docker build -t $DOCKERHUB_REGISTRY/$DOCKERHUB_REPOSITORY:latest.openshift -f OpenShift.Dockerfile .
         docker push $DOCKERHUB_REGISTRY/$DOCKERHUB_REPOSITORY:latest.openshift
         echo "::set-output name=image::$DOCKERHUB_REGISTRY/$DOCKERHUB_REPOSITORY:latest"
