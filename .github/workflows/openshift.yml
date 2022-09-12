@@ -101,7 +101,7 @@ jobs:
           }
           else {
             core.info("A registry password is required");
-            secrets["IMAGE_REGISTRY_PASSWORD"] = `${{ secrets.IMAGE_REGISTRY_PASSWORD }}`;
+            secrets["DOCKERHUB_TOKEN"] = `${{ secrets.DOCKERHUB_TOKEN }}`;
           }
 
           const missingSecrets = Object.entries(secrets).filter(([ name, value ]) => {
