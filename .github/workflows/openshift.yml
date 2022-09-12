@@ -137,6 +137,25 @@ jobs:
       run: |
         echo "IMAGE_TAGS=latest ${GITHUB_SHA::12}" | tee -a $GITHUB_ENV
 
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: 6.0.x
+    
+    - name: Restore dependencies
+      run: dotnet restore
+      
+    - name: Build/Publish the application
+      run: dotnet publish --no-restore
+      
+    - name: Test unit tests
+      run: dotnet test --no-build --verbosity normal
+      working-directory: Song.API.UnitTests/
+
+    - name: Test intergration tests
+      run: dotnet test --no-build --verbosity normal
+      working-directory: Song.API.IntergrationTests/     
+
     # https://github.com/redhat-actions/buildah-build#readme
     - name: Build from Dockerfile
       id: build-image
